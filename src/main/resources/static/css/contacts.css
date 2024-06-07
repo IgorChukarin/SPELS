@@ -1,0 +1,71 @@
+#container2 {
+
+    padding: 0px 0px;
+  }
+
+h4 {
+  margin-top: 3rem;
+}
+
+.d-flex {
+  display: unset !important;
+}
+
+.card-footer {
+  background-color: unset;
+  border-top: 0;
+}
+
+
+
+img {
+
+  background-color: #ebe7d4;
+}
+
+.my-5 {
+  padding: 0px 24px;
+  margin-bottom: 0!important;
+}
+
+.card {
+  /*opacity: 0; */
+}
+
+.card:hover {
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2); /* Тень при наведении */
+
+  transform: scale(1.05); /* Увеличение при наведении */
+  overflow: visible;
+  z-index: 1;
+}
+
+.copyButton {
+  border-style: none;
+  background-color: #f7f5ee
+}
+
+.copyButton {
+  position: relative;
+}
+
+.copyButton::before {
+  content: 'Скопировано';
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.copyButton.copied::before {
+  visibility: visible;
+  opacity: 1;
+}

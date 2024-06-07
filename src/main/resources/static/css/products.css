@@ -1,0 +1,93 @@
+.btn.btn-primary {
+    color: #ebe7d4;
+    background-color:black;
+    --bs-btn-border-color: unset;
+    --bs-btn-border-radius: unset;
+    --bs-btn-active-bg: rgb(255, 255, 255);
+    --bs-btn-active-color: #ebe7d4;
+    /* Другие стили */
+  }
+
+.col {
+    padding-top: 24px;
+}
+
+.card:hover {
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2); /* Тень при наведении */
+  transform: scale(1.03); /* Увеличение при наведении */
+}
+
+.card {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Начальная тень */
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out; /* Плавные переходы */
+}
+
+
+
+
+.card {
+    --bs-card-border-color: unset;
+    height: 100%; /* Задаем фиксированную высоту для элемента .card */
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+  }
+
+.card img {
+  border-radius: 10px;
+}
+
+.card-body {
+  padding: unset;
+  padding-top: 5px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-footer {
+  display: flex; /* Выравниваем кнопки по горизонтали */
+  align-items: center; /* Выравниваем кнопки по вертикали */
+  padding: unset;
+  padding-top: 10px;
+  justify-content: flex-start;
+  background-color: white
+}
+
+.card-footer:last-child {
+  border-radius: unset;
+}
+
+#container2 {
+  margin-bottom: 30px;
+}
+
+img {
+
+  background-color: #ebe7d4;
+}
+
+
+.my-5 {
+  padding: 0px 12px;
+  margin-bottom: 0!important;
+}
+
+.card-text {
+  padding: 20px;
+  padding-top: 0px;
+}
+
+.card-title {
+  padding: 20px;
+  padding-bottom: 0px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.d-flex {
+  display: unset !important;
+}

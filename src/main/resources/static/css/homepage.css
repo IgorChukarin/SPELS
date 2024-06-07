@@ -1,0 +1,29 @@
+
+
+.col {
+  width: 100%;
+  max-width:500px;
+}
+
+
+img {
+
+  background-color: #ebe7d4;
+}
+
+.my-5 {
+  padding: 0px 24px;
+  margin-bottom: 0!important;
+}
+
+.d-flex {
+  display: unset !important;
+}
+
+img:hover {
+  transform: scale(1.03); /* Увеличение при наведении */
+}
+
+img {
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out; /* Плавные переходы */
+}
