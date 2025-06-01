@@ -1,24 +1,22 @@
 package com.example.spels.controller;
 
 import com.example.spels.dto.ProductDto;
-import com.example.spels.model.Product;
-import com.example.spels.service.ProductCRUDService;
+import com.example.spels.service.ProductCrudService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Collection;
-import java.util.List;
 
 @Controller
 @RequestMapping("/")
 public class MainController {
 
-    private final ProductCRUDService productService;
+    private final ProductCrudService productCrudService;
 
-    public MainController(ProductCRUDService productCRUDService) {
-        this.productService = productCRUDService;
+    public MainController(ProductCrudService productCRUDService) {
+        this.productCrudService = productCRUDService;
     }
 
     @GetMapping
@@ -28,7 +26,7 @@ public class MainController {
 
     @GetMapping("products")
     public String getProductsPage(Model model) {
-        Collection<ProductDto> products = productService.getAll();
+        Collection<ProductDto> products = productCrudService.getAll();
         model.addAttribute("products", products);
         return "products";
     }

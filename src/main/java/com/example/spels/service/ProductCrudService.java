@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 
 @Service
-public class ProductCRUDService implements CRUDService<ProductDto>{
+public class ProductCrudService implements CrudService<ProductDto> {
 
     private final ProductRepository repository;
 
-    public ProductCRUDService(ProductRepository productRepository) {
+    public ProductCrudService(ProductRepository productRepository) {
         this.repository = productRepository;
     }
 
@@ -23,7 +23,7 @@ public class ProductCRUDService implements CRUDService<ProductDto>{
 
     @Override
     public Collection<ProductDto> getAll() {
-        return repository.findAll().stream().map(ProductCRUDService::mapToDto).toList();
+        return repository.findAll().stream().map(ProductCrudService::mapToDto).toList();
     }
 
     @Override
@@ -37,8 +37,8 @@ public class ProductCRUDService implements CRUDService<ProductDto>{
     }
 
     @Override
-    public void delete(Integer id) {
-
+    public void deleteById(Integer id) {
+        repository.deleteById(id);
     }
 
     public static ProductDto mapToDto(Product product) {
