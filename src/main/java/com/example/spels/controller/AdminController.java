@@ -1,14 +1,14 @@
 package com.example.spels.controller;
 
 import com.example.spels.dto.ProductDto;
+import com.example.spels.service.FileStorageService;
 import com.example.spels.service.ProductCrudService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.Collection;
 
 @Controller
@@ -16,9 +16,11 @@ import java.util.Collection;
 public class AdminController {
 
     private final ProductCrudService productCrudService;
+    private final FileStorageService fileStorageService;
 
-    public AdminController(ProductCrudService productCrudService) {
+    public AdminController(ProductCrudService productCrudService, FileStorageService fileStorageService) {
         this.productCrudService = productCrudService;
+        this.fileStorageService = fileStorageService;
     }
 
     @GetMapping
@@ -26,6 +28,17 @@ public class AdminController {
         Collection<ProductDto> products = productCrudService.getAll();
         model.addAttribute("products", products);
         return "admin";
+    }
+
+    @PostMapping("/add")
+    public String createProduct(
+            @ModelAttribute ProductDto productDto,
+            @RequestParam("imageFile") MultipartFile imageFile
+    ) {
+        String imagePath = fileStorageService.saveImage(imageFile);
+        productDto.setImagePath(imagePath);
+        productCrudService.create(productDto);
+        return "redirect:/admin";
     }
 
     @PostMapping("/delete/{id}")

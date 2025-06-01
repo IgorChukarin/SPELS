@@ -27,8 +27,9 @@ public class ProductCrudService implements CrudService<ProductDto> {
     }
 
     @Override
-    public void create(ProductDto item) {
-
+    public void create(ProductDto productDto) {
+        Product product = mapToEntity(productDto);
+        repository.save(product);
     }
 
     @Override

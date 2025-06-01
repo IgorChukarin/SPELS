@@ -53,6 +53,7 @@
   padding-top: 10px;
   justify-content: flex-start;
   background-color: white
+  border-radius: 10px;
 }
 
 .card-footer:last-child {
@@ -90,4 +91,18 @@ a {
 
 .d-flex {
   display: unset !important;
+}
+
+.card-add .card-body {
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    font-size: 72px;
+    font-weight: bold;
+    color: #333;
+    border: 2px dashed #999;
+    cursor: pointer;
 }
