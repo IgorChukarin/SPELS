@@ -43,7 +43,14 @@ public class FileStorageService {
         return (dotIndex >= 0) ? filename.substring(dotIndex) : "";
     }
 
-    public void deleteImage() {
-
+    public void deleteImage(String imagePath) {
+        if (imagePath != null && !imagePath.isBlank()) {
+            Path filePath = Paths.get(imagePath);
+            try {
+                Files.deleteIfExists(filePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

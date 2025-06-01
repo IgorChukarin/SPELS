@@ -50,7 +50,6 @@
   display: flex; /* Выравниваем кнопки по горизонтали */
   align-items: center; /* Выравниваем кнопки по вертикали */
   padding: unset;
-  padding-top: 10px;
   justify-content: flex-start;
   background-color: white
   border-radius: 10px;
@@ -106,3 +105,5 @@ a {
     border: 2px dashed #999;
     cursor: pointer;
 }
+
+.

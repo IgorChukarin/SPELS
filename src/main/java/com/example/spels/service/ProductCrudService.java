@@ -6,14 +6,17 @@ import com.example.spels.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class ProductCrudService implements CrudService<ProductDto> {
 
     private final ProductRepository repository;
+    private final FileStorageService fileStorageService;
 
-    public ProductCrudService(ProductRepository productRepository) {
+    public ProductCrudService(ProductRepository productRepository, FileStorageService fileStorageService) {
         this.repository = productRepository;
+        this.fileStorageService = fileStorageService;
     }
 
     @Override
@@ -39,6 +42,12 @@ public class ProductCrudService implements CrudService<ProductDto> {
 
     @Override
     public void deleteById(Integer id) {
+        Optional<Product> productOpt = repository.findById(id);
+        if (productOpt.isPresent()) {
+            Product product = productOpt.get();
+            String imagePath = product.getImagePath();
+            fileStorageService.deleteImage(imagePath);
+        }
         repository.deleteById(id);
     }
 
