@@ -15,20 +15,10 @@
                     </div>
 
                     <div class="card-footer">
-                        <div class="row">
-                            <div class="col-6">
-                                <form action="/admin/delete/${product.id}" method="post" style="margin: 0;">
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                    <button type="submit" class="btn btn-warning">Удалить</button>
-                                </form>
-                            </div>
-                            <div class="col-6">
-                                <form action="/admin/delete/${product.id}" method="post" style="margin: 0;">
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                    <button type="submit" class="btn btn-danger">Удалить</button>
-                                </form>
-                            </div>
-                        </div>
+                        <form action="/admin/delete/${product.id}" method="post" style="margin: 0;">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                        </form>
                     </div>
 
 
@@ -37,7 +27,7 @@
         </#list>
 
         <div class="col">
-            <div class="card card-add" data-bs-toggle="modal" data-bs-target="#addProductModal">
+            <div class="card card-add" data-bs-toggle="modal" data-bs-target="#addProductModal" >
                 <div class="card-body">
                     +
                 </div>
@@ -78,6 +68,8 @@
         </form>
       </div>
     </div>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"

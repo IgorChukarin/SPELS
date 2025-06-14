@@ -1,3 +1,6 @@
+<!-- Подключи Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
 <div class="container">
     <nav class="navbar navbar-expand-lg bg-transparent" style="padding: 1% 0%;">
         <div class="container-fluid p-0">
@@ -25,6 +28,20 @@
                             style="padding: 20px 60px 20px 3px;">КОНТАКТЫ</a>
                     </li>
                 </ul>
+            </div>
+            <!-- Иконка входа справа -->
+            <div class="d-none d-lg-flex align-items-center ms-auto">
+                <#if isLoggedIn>
+                    <!-- Иконка выхода -->
+                    <a href="/logout" class="nav-link px-3" title="Logout">
+                      <i class="fas fa-sign-out-alt" style="font-size: 20px; color: #dfd9b9;"></i>
+                    </a>
+                  <#else>
+                    <!-- Иконка входа -->
+                    <a href="/login" class="nav-link px-3" title="Login">
+                      <i class="fas fa-user" style="font-size: 20px; color: #dfd9b9;"></i>
+                    </a>
+                </#if>
             </div>
         </div>
     </nav>
