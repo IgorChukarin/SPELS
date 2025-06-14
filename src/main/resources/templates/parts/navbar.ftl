@@ -27,6 +27,12 @@
                         <a class="nav-link active" aria-current="page" href="/contacts"
                             style="padding: 20px 60px 20px 3px;">КОНТАКТЫ</a>
                     </li>
+                    <#if isLoggedIn>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/admin"
+                                style="padding: 20px 60px 20px 3px;">АДМИН</a>
+                        </li>
+                    </#if>
                 </ul>
             </div>
             <!-- Иконка входа справа -->
