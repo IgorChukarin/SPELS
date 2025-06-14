@@ -34,6 +34,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
@@ -43,6 +44,12 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                         .permitAll()
+                )
+                .csrf(csrf -> csrf
+                    .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**")) // отключаем CSRF для H2
+                )
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.disable()) // современный способ отключить X-Frame-Options
                 );
 
         return http.build();
