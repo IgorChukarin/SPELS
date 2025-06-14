@@ -17,7 +17,8 @@
                     <div class="card-footer">
                         <form action="/admin/delete/${product.id}" method="post" style="margin: 0;">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                            <button type="submit" class="btn btn-danger">Удалить</button>
+                            <button type="button" class="btn btn-danger" onclick="confirmDelete(this.form)">Удалить</button>
+
                         </form>
                     </div>
 
@@ -77,6 +78,14 @@
 
 </div>
 <script src="js/products.js"></script>
+<script>
+  function confirmDelete(form) {
+    if (confirm("Вы уверены, что хотите удалить этот продукт?")) {
+      form.submit();
+    }
+  }
+</script>
+
 
 
 </@p.page>
