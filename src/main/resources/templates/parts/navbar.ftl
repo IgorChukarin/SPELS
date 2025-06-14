@@ -30,7 +30,7 @@
                     <#if isLoggedIn>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/admin"
-                                style="padding: 20px 60px 20px 3px;">АДМИН</a>
+                                style="padding: 20px 60px 20px 3px; color: #0d6efd;">АДМИН</a>
                         </li>
                     </#if>
                 </ul>
@@ -39,7 +39,11 @@
             <div class="d-none d-lg-flex align-items-center ms-auto">
                 <#if isLoggedIn>
                     <!-- Иконка выхода -->
-                    <a href="/logout" class="nav-link px-3" title="Logout">
+                    <form id="logoutForm" action="/logout" method="post" style="display:none;">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    </form>
+
+                    <a href="#" onclick="document.getElementById('logoutForm').submit(); return false;" title="Logout">
                       <i class="fas fa-sign-out-alt" style="font-size: 20px; color: #dfd9b9;"></i>
                     </a>
                   <#else>
