@@ -14,13 +14,24 @@
                         <p class="card-text">${product.text}</p>
                     </div>
 
-                    <div class="card-footer">
-                        <form action="/admin/delete/${product.id}" method="post" style="margin: 0;">
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                            <button type="button" class="btn btn-danger" onclick="confirmDelete(this.form)">Удалить</button>
 
-                        </form>
+                    <div class="card-footer p-0">
+                        <div class="row g-0">
+                            <div class="col-6 border-end">
+                                <form action="/admin/delete/${product.id}" method="post" style="margin: 0; padding: 0;">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                    <button type="button" class="btn btn-outline-danger btn-round-left w-100" onclick="confirmDelete(this.form)">Удалить</button>
+                                </form>
+                            </div>
+                            <div class="col-6">
+                                <form action="/admin/edit/${product.id}" method="post" style="margin: 0; padding: 0;">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                    <button type="submit" class="btn btn-outline-warning btn-round-right w-100">Редактировать</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
+
 
 
                 </div>

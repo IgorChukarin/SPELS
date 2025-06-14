@@ -46,15 +46,6 @@
   flex-direction: column;
 }
 
-.card-footer {
-  display: flex; /* Выравниваем кнопки по горизонтали */
-  align-items: center; /* Выравниваем кнопки по вертикали */
-  padding: unset;
-  justify-content: flex-start;
-  background-color: white
-  border-radius: 10px;
-}
-
 .card-footer:last-child {
   border-radius: unset;
 }
@@ -106,4 +97,18 @@ a {
     border: 2px dashed #999;
     cursor: pointer;
     background-color: #ebe7d4;
+}
+
+.btn-round-left {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 0;
+}
+
+.btn-round-right {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 8px;
 }
