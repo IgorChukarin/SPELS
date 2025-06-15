@@ -44,7 +44,7 @@
                     </form>
 
                     <a href="#" onclick="document.getElementById('logoutForm').submit(); return false;" title="Logout">
-                      <i class="fas fa-sign-out-alt" style="font-size: 20px; color: #dfd9b9;"></i>
+                      <i class="fas fa-sign-out-alt" style="font-size: 20px; color: black;"></i>
                     </a>
                   <#else>
                     <!-- Иконка входа -->
