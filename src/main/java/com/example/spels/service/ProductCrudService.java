@@ -11,11 +11,11 @@ import java.util.Optional;
 @Service
 public class ProductCrudService implements CrudService<ProductDto> {
 
-    private final ProductRepository repository;
+    private final ProductRepository productRepository;
     private final FileStorageService fileStorageService;
 
     public ProductCrudService(ProductRepository productRepository, FileStorageService fileStorageService) {
-        this.repository = productRepository;
+        this.productRepository = productRepository;
         this.fileStorageService = fileStorageService;
     }
 
@@ -26,29 +26,36 @@ public class ProductCrudService implements CrudService<ProductDto> {
 
     @Override
     public Collection<ProductDto> getAll() {
-        return repository.findAll().stream().map(ProductCrudService::mapToDto).toList();
+        return productRepository.findAll().stream().map(ProductCrudService::mapToDto).toList();
     }
 
     @Override
     public void create(ProductDto productDto) {
         Product product = mapToEntity(productDto);
-        repository.save(product);
+        productRepository.save(product);
     }
 
     @Override
-    public void update(ProductDto item) {
-
+    public void update(ProductDto productDto) {
+        Product existingProduct = productRepository.findById(productDto.getId())
+                .orElseThrow(() -> new RuntimeException("Продукт не найден"));
+        existingProduct.setBoldText(productDto.getBoldText());
+        existingProduct.setText(productDto.getText());
+        if (productDto.getImagePath() != null) {
+            existingProduct.setImagePath(productDto.getImagePath());
+        }
+        productRepository.save(existingProduct);
     }
 
     @Override
     public void deleteById(Integer id) {
-        Optional<Product> productOpt = repository.findById(id);
+        Optional<Product> productOpt = productRepository.findById(id);
         if (productOpt.isPresent()) {
             Product product = productOpt.get();
             String imagePath = product.getImagePath();
             fileStorageService.deleteImage(imagePath);
         }
-        repository.deleteById(id);
+        productRepository.deleteById(id);
     }
 
     public static ProductDto mapToDto(Product product) {

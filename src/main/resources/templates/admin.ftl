@@ -90,7 +90,7 @@
 
     <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <form action="/admin/edit" method="post">
+        <form action="/admin/edit" method="post" enctype="multipart/form-data">
           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
           <input type="hidden" name="id" id="edit-id">
           <div class="modal-content">

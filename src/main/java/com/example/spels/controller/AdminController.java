@@ -41,7 +41,18 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-
+    @PostMapping("/edit")
+    public String editProduct(
+            @ModelAttribute ProductDto productDto,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile
+    ) {
+        if (!imageFile.isEmpty()) {
+            String imagePath = fileStorageService.saveImage(imageFile);
+            productDto.setImagePath(imagePath);
+        }
+        productCrudService.update(productDto);
+        return "redirect:/admin";
+    }
 
     @PostMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Integer id) {
