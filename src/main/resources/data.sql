@@ -7,3 +7,6 @@ INSERT INTO product (company_name, page_text, bold_text, text, image_path) VALUE
 INSERT INTO product_photos (product_id, photo_url) VALUES
 (1, '/uploads/photos/blueprint1.png'),
 (1, '/uploads/photos/blueprint2.png');
+
+INSERT INTO product_documents (product_id, document_url) VALUES
+(1, '/uploads/documents/горелка ASG1T.pdf');

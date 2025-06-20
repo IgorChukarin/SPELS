@@ -9,5 +9,3 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 }
-
-//java -Dfile.encoding=UTF-8 -jar C:\Users\Zigor\Desktop\folder\Projects\SPELS\target\spels-1.0-SNAPSHOT.jar

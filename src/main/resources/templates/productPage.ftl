@@ -38,6 +38,16 @@
     </div>
 
     <h3>Документация</h3>
+    <ul>
+      <#list product.documents as doc>
+        <li>
+          <a href="${doc}" download="${doc}">
+            ${doc}
+          </a>
+        </li>
+      </#list>
+    </ul>
+
 
   </div>
 
