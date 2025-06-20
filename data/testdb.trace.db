@@ -49,3 +49,9 @@ INSERT INTO product (company_name, pageText, bold_text, text, image_path) VALUES
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
 	at com.example.spels.Application.main(Application.java:9)
+2025-06-20 15:18:15 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO product_photos (product_id, photo_url) ([*]'1', 'uploads/photos/blueprint.png')"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+INSERT INTO product_photos (product_id, photo_url) ('1', 'uploads/photos/blueprint.png') [42001-214]
+2025-06-20 15:19:12 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO product_photos (product_id, photo_url) ([*]1, 'uploads/photos/blueprint.png')"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+INSERT INTO product_photos (product_id, photo_url) (1, 'uploads/photos/blueprint.png') [42001-214]
