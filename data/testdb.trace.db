@@ -55,3 +55,15 @@ INSERT INTO product_photos (product_id, photo_url) ('1', 'uploads/photos/bluepri
 2025-06-20 15:19:12 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO product_photos (product_id, photo_url) ([*]1, 'uploads/photos/blueprint.png')"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
 INSERT INTO product_photos (product_id, photo_url) (1, 'uploads/photos/blueprint.png') [42001-214]
+2025-06-20 17:20:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "PAGE_TEXT CHARACTER VARYING(255)": "U&'\\041a\\043e\\043c\\043f\\0430\\043d\\0438\\044f Rexnord \\2014 \\0432\\0435\\0434\\0443\\0... (525)"; SQL statement:
+update product set bold_text=?,company_name=?,image_path=?,page_text=?,text=? where id=? [22001-214]
+2025-06-20 17:23:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "PAGE_TEXT CHARACTER VARYING(500)": "U&'\\041a\\043e\\043c\\043f\\0430\\043d\\0438\\044f Rexnord \\2014 \\0432\\0435\\0434\\0443\\0... (525)"; SQL statement:
+update product set bold_text=?,company_name=?,image_path=?,page_text=?,text=? where id=? [22001-214]
+2025-06-20 17:24:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "PAGE_TEXT CHARACTER VARYING(1000)": "U&'\\041a\\043e\\043c\\043f\\0430\\043d\\0438\\044f Rexnord \\2014 \\0432\\0435\\0434\\0443\\0... (1049)"; SQL statement:
+update product set bold_text=?,company_name=?,image_path=?,page_text=?,text=? where id=? [22001-214]
+2025-06-20 17:24:51 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "PAGE_TEXT CHARACTER VARYING(1000)": "U&'\\041a\\043e\\043c\\043f\\0430\\043d\\0438\\044f Rexnord \\2014 \\0432\\0435\\0434\\0443\\0... (1243)"; SQL statement:
+update product set bold_text=?,company_name=?,image_path=?,page_text=?,text=? where id=? [22001-214]

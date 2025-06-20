@@ -22,6 +22,8 @@ public class Product {
     private String boldText;
     private String text;
     private String companyName;
+
+    @Column(length = 1000)
     private String pageText;
 
 

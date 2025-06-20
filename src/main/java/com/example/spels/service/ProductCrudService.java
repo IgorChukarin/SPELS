@@ -44,6 +44,8 @@ public class ProductCrudService implements CrudService<ProductDto> {
                 .orElseThrow(() -> new RuntimeException("Продукт не найден"));
         existingProduct.setBoldText(productDto.getBoldText());
         existingProduct.setText(productDto.getText());
+        existingProduct.setCompanyName(productDto.getCompanyName());
+        existingProduct.setPageText(productDto.getPageText());
         if (productDto.getImagePath() != null) {
             existingProduct.setImagePath(productDto.getImagePath());
         }

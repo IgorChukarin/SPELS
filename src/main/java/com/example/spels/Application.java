@@ -9,3 +9,12 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 }
+
+
+// TODO:
+// добавление photos
+// добавление documents
+
+// все тоже самое в создании новой карточки
+
+// закончить дизайн page
