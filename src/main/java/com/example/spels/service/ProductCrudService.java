@@ -21,7 +21,10 @@ public class ProductCrudService implements CrudService<ProductDto> {
 
     @Override
     public ProductDto getById(Integer id) {
-        return null;
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Продукт с id " + id + " не найден"));
+        ProductDto productDto = mapToDto(product);
+        return productDto;
     }
 
     @Override
@@ -61,18 +64,28 @@ public class ProductCrudService implements CrudService<ProductDto> {
     public static ProductDto mapToDto(Product product) {
         ProductDto productDto = new ProductDto();
         productDto.setId(product.getId());
+        productDto.setImagePath(product.getImagePath());
         productDto.setBoldText(product.getBoldText());
         productDto.setText(product.getText());
-        productDto.setImagePath(product.getImagePath());
+
+        productDto.setCompanyName(product.getCompanyName());
+        productDto.setPageText(product.getPageText());
+        productDto.setPhotos(product.getPhotos());
+        productDto.setDocuments(product.getDocuments());
         return productDto;
     }
 
     public static Product mapToEntity(ProductDto productDto) {
         Product product = new Product();
         product.setId(productDto.getId());
+        product.setImagePath(productDto.getImagePath());
         product.setBoldText(productDto.getBoldText());
         product.setText(productDto.getText());
-        product.setImagePath(productDto.getImagePath());
+
+        product.setCompanyName(productDto.getCompanyName());
+        product.setPageText(productDto.getPageText());
+        product.setPhotos(productDto.getPhotos());
+        product.setDocuments(productDto.getDocuments());
         return product;
     }
 }

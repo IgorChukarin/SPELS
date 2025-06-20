@@ -5,13 +5,15 @@
     <div class="row row-cols-1 row-cols-md-3 g-4;">
         <#list products as product>
             <div class="col">
-                <div class="card">
-                    <img src="${product.imagePath}" loading="lazy" class="card-img-top" alt="Изображение">
-                    <div class="card-body">
-                        <h5 class="card-title">${product.boldText}</h5>
-                        <p class="card-text">${product.text}</p>
+                <a href="products/${product.id}" class="text-decoration-none text-dark">
+                    <div class="card">
+                        <img src="${product.imagePath}" loading="lazy" class="card-img-top" alt="Изображение">
+                        <div class="card-body">
+                            <h5 class="card-title">${product.boldText}</h5>
+                            <p class="card-text">${product.text}</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </#list>
     </div>
