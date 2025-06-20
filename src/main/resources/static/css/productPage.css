@@ -1,0 +1,27 @@
+.carousel-inner {
+  width: 500px;   /* фиксированная ширина */
+  height: 300px;  /* фиксированная высота */
+  margin: 0 auto; /* центрируем карусель по горизонтали */
+  position: relative;
+}
+
+.carousel-item {
+  width: 100%;
+  height: 100%;          /* делаем flex-контейнер */
+  justify-content: center;   /* горизонтальное центрирование */
+  align-items: center;       /* вертикальное центрирование */
+  overflow: hidden;
+}
+
+.carousel-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+#carouselExampleControls {
+  background-color: rgba(255, 255, 255, 0.5); /* белый с прозрачностью 50% */
+  border-radius: 15px; /* радиус скругления углов */
+  overflow: hidden; /* чтобы содержимое не выходило за края с закруглениями */
+}
+
