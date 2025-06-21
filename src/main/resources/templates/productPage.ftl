@@ -1,7 +1,10 @@
 <#import "parts/pageTemplate.ftl" as p>
   <@p.page cssFile="/css/productPage.css">
-    <div class="container mt-5">
-      <h1 class="mb-5">${product.companyName}</h1>
+    <div class="container mt-1">
+
+      <a href="/products" class="btn custom-btn mb-4" role="button">⭠</a>
+
+      <h1 class="mb-4">${product.companyName}</h1>
       <div class="row align-items-center">
 
         <div class="col-md-6">

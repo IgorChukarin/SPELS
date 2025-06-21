@@ -21,7 +21,6 @@ public class Application {
 
 // удалять документы при обновлении
 
-// убрать data.sql в gitignore
+
 
 // В корне должны быть uploads/documents, uploads/photos, uploads/products
-

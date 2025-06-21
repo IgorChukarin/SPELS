@@ -25,3 +25,10 @@
   overflow: hidden; /* чтобы содержимое не выходило за края с закруглениями */
 }
 
+.custom-btn {
+  color: black;
+  border: 1px solid black;
+  padding: 1px 12px
+}
+
+
