@@ -1,6 +1,7 @@
 package com.example.spels.service;
 
 import com.example.spels.dto.ProductDto;
+import com.example.spels.model.PageDocument;
 import com.example.spels.model.Product;
 import com.example.spels.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -52,8 +53,15 @@ public class ProductCrudService implements CrudService<ProductDto> {
             existingProduct.setImagePath(productDto.getImagePath());
         }
 
-        existingProduct.setPhotos(productDto.getPhotos());
-        existingProduct.setDocuments(productDto.getDocuments());
+        if (!productDto.getPhotos().isEmpty()) {
+            existingProduct.setPhotos(productDto.getPhotos());
+        }
+
+        existingProduct.getDocuments().clear();
+        for (PageDocument doc : productDto.getDocuments()) {
+            doc.setProduct(existingProduct);
+        }
+        existingProduct.getDocuments().addAll(productDto.getDocuments());
         productRepository.save(existingProduct);
     }
 

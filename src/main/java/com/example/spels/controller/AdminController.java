@@ -1,6 +1,7 @@
 package com.example.spels.controller;
 
 import com.example.spels.dto.ProductDto;
+import com.example.spels.model.PageDocument;
 import com.example.spels.service.FileStorageService;
 import com.example.spels.service.ProductCrudService;
 import org.springframework.stereotype.Controller;
@@ -46,8 +47,8 @@ public class AdminController {
         List<String> photoPaths = fileStorageService.savePagePhoto(PagePhotos);
         productDto.setPhotos(photoPaths);
 
-        List<String> documentPaths = fileStorageService.saveDocument(PageDocuments);
-        productDto.setDocuments(documentPaths);
+        List<PageDocument> pageDocuments = fileStorageService.saveDocument(PageDocuments);
+        productDto.setDocuments(pageDocuments);
 
         productCrudService.create(productDto);
         return "redirect:/admin";
@@ -62,14 +63,14 @@ public class AdminController {
             @RequestParam(value = "pageDocuments", required = false) List<MultipartFile> PageDocuments
             ) {
 
-        String imagePath = fileStorageService.saveCardPhoto(imageFile);
-        productDto.setImagePath(imagePath);
-
+        if (!imageFile.isEmpty()) {
+            String imagePath = fileStorageService.saveCardPhoto(imageFile);
+            productDto.setImagePath(imagePath);
+        }
         List<String> photoPaths = fileStorageService.savePagePhoto(PagePhotos);
         productDto.setPhotos(photoPaths);
-
-        List<String> documentPaths = fileStorageService.saveDocument(PageDocuments);
-        productDto.setDocuments(documentPaths);
+        List<PageDocument> pageDocuments = fileStorageService.saveDocument(PageDocuments);
+        productDto.setDocuments(pageDocuments);
 
         productCrudService.update(productDto);
         return "redirect:/admin";

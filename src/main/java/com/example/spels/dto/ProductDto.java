@@ -1,5 +1,6 @@
 package com.example.spels.dto;
 
+import com.example.spels.model.PageDocument;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,5 +19,5 @@ public class ProductDto {
     private String companyName;
     private String pageText;
     private List<String> photos = new ArrayList<>();
-    private List<String> documents = new ArrayList<>();
+    private List<PageDocument> documents = new ArrayList<>();
 }

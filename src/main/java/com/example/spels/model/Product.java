@@ -32,8 +32,6 @@ public class Product {
     @Column(name = "photo_url")
     private List<String> photos = new ArrayList<>();
 
-    @ElementCollection
-    @CollectionTable(name = "product_documents", joinColumns = @JoinColumn(name = "product_id"))
-    @Column(name = "document_url")
-    private List<String> documents = new ArrayList<>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PageDocument> documents = new ArrayList<>();
 }

@@ -1,5 +1,6 @@
 package com.example.spels.service;
 
+import com.example.spels.model.PageDocument;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,23 +34,27 @@ public class FileStorageService {
         return photoPaths;
     }
 
-    public List<String> saveDocument(List<MultipartFile> PageDocuments) {
-        List<String> documentPaths = new ArrayList<>();
+    public List<PageDocument> saveDocument(List<MultipartFile> PageDocuments) {
+        List<PageDocument> pageDocuments = new ArrayList<>();
         if (PageDocuments != null && !PageDocuments.isEmpty()) {
-            for (MultipartFile photo : PageDocuments) {
-                if (!photo.isEmpty()) {
-                    String path = saveFile(photo, PAGE_DOCUMENT_UPLOAD_DIR);
-                    documentPaths.add(path);
+            for (MultipartFile document : PageDocuments) {
+                if (!document.isEmpty()) {
+                    String name = document.getOriginalFilename();
+                    String path = saveFile(document, PAGE_DOCUMENT_UPLOAD_DIR);
+                    PageDocument pageDocument = new PageDocument();
+                    pageDocument.setName(name);
+                    pageDocument.setPath(path);
+                    pageDocuments.add(pageDocument);
                 }
             }
         }
-        return documentPaths;
+        return pageDocuments;
     }
 
 
     private String saveFile(MultipartFile file, String uploadDirectory) {
         if (file.isEmpty()) {
-            throw new IllegalArgumentException("Файл пуст");
+            throw new IllegalArgumentException("Файл Пуст " + file.getName());
         }
 
         try {

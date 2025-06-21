@@ -13,14 +13,9 @@ public class Application {
 
 // TODO:
 
-// нейминг файлов
-
 // длинна текстов решить проблему
 
-// кнопка возврата
-
 // удалять документы при обновлении
-
 
 
 // В корне должны быть uploads/documents, uploads/photos, uploads/products
