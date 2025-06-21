@@ -53,6 +53,7 @@ public class ProductCrudService implements CrudService<ProductDto> {
         }
 
         existingProduct.setPhotos(productDto.getPhotos());
+        existingProduct.setDocuments(productDto.getDocuments());
         productRepository.save(existingProduct);
     }
 

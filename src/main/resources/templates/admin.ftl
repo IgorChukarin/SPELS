@@ -41,6 +41,7 @@
         </div>
       </div>
 
+
       <!-- Modal window add -->
       <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -52,18 +53,39 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
               </div>
               <div class="modal-body">
-                <div class="mb-3">
-                  <label for="imageFile" class="form-label">Изображение</label>
+
+                <h3 class="mb-3">Карточка</h3>
+                <div class="mb-4">
+                  <label for="imageFile" class="form-label text-muted">Фото</label>
                   <input type="file" class="form-control" id="imageFile" name="imageFile" accept="image/*">
                 </div>
-                <div class="mb-3">
-                  <label for="boldText" class="form-label">Заголовок</label>
-                  <textarea type="text" class="form-control" id="boldText" name="boldText" rows="4" required></textarea>
+                <div class="mb-4">
+                  <label for="boldText" class="form-label text-muted">Заголовок</label>
+                  <textarea type="text" class="form-control" id="boldText" name="boldText" rows="2" required></textarea>
                 </div>
-                <div class="mb-3">
-                  <label for="text" class="form-label">Описание</label>
-                  <textarea type="text" class="form-control" id="text" name="text" rows="4" required></textarea>
+                <div class="mb-4">
+                  <label for="text" class="form-label text-muted">Описание</label>
+                  <textarea type="text" class="form-control" id="text" name="text" rows="2" required></textarea>
                 </div>
+
+                <h3 class="m3-4 mt-4">Страница продукта</h3>
+                <div class="mb-4">
+                  <label for="edit-companyName" class="form-label text-muted">Название компании или продукта</label>
+                  <textarea class="form-control" id="companyName" name="companyName" rows="1" required></textarea>
+                </div>
+                <div class="mb-4">
+                  <label for="edit-pageText" class="form-label text-muted">Развернутый текст</label>
+                  <textarea class="form-control" id="pageText" name="pageText" rows="8" required></textarea>
+                </div>
+                <div class="mb-4">
+                  <label for="formFileMultiple" class="form-label text-muted">Фотографии</label>
+                  <input class="form-control" type="file" name="pagePhotos" id="formFileMultiple" multiple>
+                </div>
+                <div class="mb-4">
+                  <label for="formFileMultiple" class="form-label text-muted">Документы</label>
+                  <input class="form-control" type="file" name="pageDocuments" id="formFileMultiple" multiple>
+                </div>
+
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
@@ -73,6 +95,7 @@
           </form>
         </div>
       </div>
+
 
       <!-- Modal window edit -->
       <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
@@ -116,8 +139,9 @@
                 </div>
                 <div class="mb-4">
                   <label for="formFileMultiple" class="form-label text-muted">Документы</label>
-                  <input class="form-control" type="file" id="formFileMultiple" multiple>
+                  <input class="form-control" type="file" name="pageDocuments" id="formFileMultiple" multiple>
                 </div>
+
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>

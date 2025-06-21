@@ -31,16 +31,18 @@
 
       </div>
 
-      <div>
-          <h3 class="mt-5">Документация</h3>
-          <ul>
+        <div>
+          <h3 class="mt-5 mb-4">Документация</h3>
+          <div class="d-flex flex-column gap-2">
             <#list product.documents as doc>
-              <li>
-                <a href="${doc}" download="${doc}"> ${doc} </a>
-              </li>
+              <a href="${doc}" download="${doc}" class="d-flex align-items-center text-decoration-none">
+                <img src="/images/fileicon.PNG" alt="file" width="50" class="me-2">
+                <span>${doc?substring(doc?last_index_of("/") + 1)}</span>
+              </a>
             </#list>
-          </ul>
-      </div>
+          </div>
+        </div>
+
 
 
     </div>

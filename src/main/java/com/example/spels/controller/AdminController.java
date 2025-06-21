@@ -49,7 +49,8 @@ public class AdminController {
     public String editProduct(
             @ModelAttribute ProductDto productDto,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
-            @RequestParam(value = "pagePhotos", required = false) List<MultipartFile> PagePhotos
+            @RequestParam(value = "pagePhotos", required = false) List<MultipartFile> PagePhotos,
+            @RequestParam(value = "pageDocuments", required = false) List<MultipartFile> PageDocuments
             ) {
 
         if (!imageFile.isEmpty()) {
@@ -57,18 +58,27 @@ public class AdminController {
             productDto.setImagePath(imagePath);
         }
 
-        System.out.println("РАЗМЕР:" + PagePhotos.size());
         if (PagePhotos != null && !PagePhotos.isEmpty()) {
             List<String> photoPaths = new ArrayList<>();
             for (MultipartFile photo : PagePhotos) {
                 if (!photo.isEmpty()) {
-                    String path = fileStorageService.savePagePhoto(photo); // или savePhoto
+                    String path = fileStorageService.savePagePhoto(photo);
                     photoPaths.add(path);
                 }
             }
             productDto.setPhotos(photoPaths);
         }
 
+        if (PageDocuments != null && !PageDocuments.isEmpty()) {
+            List<String> documentsPaths = new ArrayList<>();
+            for (MultipartFile document : PageDocuments) {
+                if (!document.isEmpty()) {
+                    String path = fileStorageService.saveDocument(document);
+                    documentsPaths.add(path);
+                }
+            }
+            productDto.setDocuments(documentsPaths);
+        }
 
         productCrudService.update(productDto);
         return "redirect:/admin";
