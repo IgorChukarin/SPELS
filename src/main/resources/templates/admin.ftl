@@ -110,6 +110,14 @@
                   <label for="edit-pageText" class="form-label text-muted">Развернутый текст</label>
                   <textarea class="form-control" id="edit-pageText" name="pageText" rows="8" required></textarea>
                 </div>
+                <div class="mb-4">
+                  <label for="formFileMultiple" class="form-label text-muted">Фотографии</label>
+                  <input class="form-control" type="file" name="pagePhotos" id="formFileMultiple" multiple>
+                </div>
+                <div class="mb-4">
+                  <label for="formFileMultiple" class="form-label text-muted">Документы</label>
+                  <input class="form-control" type="file" id="formFileMultiple" multiple>
+                </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>

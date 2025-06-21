@@ -8,8 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -23,6 +24,7 @@ public class AdminController {
         this.fileStorageService = fileStorageService;
     }
 
+
     @GetMapping
     public String adminHome(Model model) {
         Collection<ProductDto> products = productCrudService.getAll();
@@ -30,29 +32,48 @@ public class AdminController {
         return "admin";
     }
 
+
     @PostMapping("/add")
     public String createProduct(
             @ModelAttribute ProductDto productDto,
             @RequestParam("imageFile") MultipartFile imageFile
     ) {
-        String imagePath = fileStorageService.saveImage(imageFile);
+        String imagePath = fileStorageService.saveCardPhoto(imageFile);
         productDto.setImagePath(imagePath);
         productCrudService.create(productDto);
         return "redirect:/admin";
     }
 
+
     @PostMapping("/edit")
     public String editProduct(
             @ModelAttribute ProductDto productDto,
-            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile
-    ) {
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+            @RequestParam(value = "pagePhotos", required = false) List<MultipartFile> PagePhotos
+            ) {
+
         if (!imageFile.isEmpty()) {
-            String imagePath = fileStorageService.saveImage(imageFile);
+            String imagePath = fileStorageService.saveCardPhoto(imageFile);
             productDto.setImagePath(imagePath);
         }
+
+        System.out.println("РАЗМЕР:" + PagePhotos.size());
+        if (PagePhotos != null && !PagePhotos.isEmpty()) {
+            List<String> photoPaths = new ArrayList<>();
+            for (MultipartFile photo : PagePhotos) {
+                if (!photo.isEmpty()) {
+                    String path = fileStorageService.savePagePhoto(photo); // или savePhoto
+                    photoPaths.add(path);
+                }
+            }
+            productDto.setPhotos(photoPaths);
+        }
+
+
         productCrudService.update(productDto);
         return "redirect:/admin";
     }
+
 
     @PostMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Integer id) {

@@ -67,3 +67,7 @@ update product set bold_text=?,company_name=?,image_path=?,page_text=?,text=? wh
 2025-06-20 17:24:51 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLDataException: Value too long for column "PAGE_TEXT CHARACTER VARYING(1000)": "U&'\\041a\\043e\\043c\\043f\\0430\\043d\\0438\\044f Rexnord \\2014 \\0432\\0435\\0434\\0443\\0... (1243)"; SQL statement:
 update product set bold_text=?,company_name=?,image_path=?,page_text=?,text=? where id=? [22001-214]
+2025-06-21 12:06:42 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]
+2025-06-21 12:32:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]

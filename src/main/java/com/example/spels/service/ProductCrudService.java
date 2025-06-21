@@ -42,13 +42,17 @@ public class ProductCrudService implements CrudService<ProductDto> {
     public void update(ProductDto productDto) {
         Product existingProduct = productRepository.findById(productDto.getId())
                 .orElseThrow(() -> new RuntimeException("Продукт не найден"));
+
         existingProduct.setBoldText(productDto.getBoldText());
         existingProduct.setText(productDto.getText());
         existingProduct.setCompanyName(productDto.getCompanyName());
         existingProduct.setPageText(productDto.getPageText());
+
         if (productDto.getImagePath() != null) {
             existingProduct.setImagePath(productDto.getImagePath());
         }
+
+        existingProduct.setPhotos(productDto.getPhotos());
         productRepository.save(existingProduct);
     }
 
