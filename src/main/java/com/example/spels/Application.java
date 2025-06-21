@@ -21,5 +21,7 @@ public class Application {
 
 // удалять документы при обновлении
 
-// сделать шаблонированные страницы, убрать data.sql в gitignore
+// убрать data.sql в gitignore
+
+// В корне должны быть uploads/documents, uploads/photos, uploads/products
 
