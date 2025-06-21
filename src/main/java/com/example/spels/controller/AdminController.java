@@ -36,10 +36,19 @@ public class AdminController {
     @PostMapping("/add")
     public String createProduct(
             @ModelAttribute ProductDto productDto,
-            @RequestParam("imageFile") MultipartFile imageFile
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+            @RequestParam(value = "pagePhotos", required = false) List<MultipartFile> PagePhotos,
+            @RequestParam(value = "pageDocuments", required = false) List<MultipartFile> PageDocuments
     ) {
         String imagePath = fileStorageService.saveCardPhoto(imageFile);
         productDto.setImagePath(imagePath);
+
+        List<String> photoPaths = fileStorageService.savePagePhoto(PagePhotos);
+        productDto.setPhotos(photoPaths);
+
+        List<String> documentPaths = fileStorageService.saveDocument(PageDocuments);
+        productDto.setDocuments(documentPaths);
+
         productCrudService.create(productDto);
         return "redirect:/admin";
     }
@@ -53,32 +62,14 @@ public class AdminController {
             @RequestParam(value = "pageDocuments", required = false) List<MultipartFile> PageDocuments
             ) {
 
-        if (!imageFile.isEmpty()) {
-            String imagePath = fileStorageService.saveCardPhoto(imageFile);
-            productDto.setImagePath(imagePath);
-        }
+        String imagePath = fileStorageService.saveCardPhoto(imageFile);
+        productDto.setImagePath(imagePath);
 
-        if (PagePhotos != null && !PagePhotos.isEmpty()) {
-            List<String> photoPaths = new ArrayList<>();
-            for (MultipartFile photo : PagePhotos) {
-                if (!photo.isEmpty()) {
-                    String path = fileStorageService.savePagePhoto(photo);
-                    photoPaths.add(path);
-                }
-            }
-            productDto.setPhotos(photoPaths);
-        }
+        List<String> photoPaths = fileStorageService.savePagePhoto(PagePhotos);
+        productDto.setPhotos(photoPaths);
 
-        if (PageDocuments != null && !PageDocuments.isEmpty()) {
-            List<String> documentsPaths = new ArrayList<>();
-            for (MultipartFile document : PageDocuments) {
-                if (!document.isEmpty()) {
-                    String path = fileStorageService.saveDocument(document);
-                    documentsPaths.add(path);
-                }
-            }
-            productDto.setDocuments(documentsPaths);
-        }
+        List<String> documentPaths = fileStorageService.saveDocument(PageDocuments);
+        productDto.setDocuments(documentPaths);
 
         productCrudService.update(productDto);
         return "redirect:/admin";

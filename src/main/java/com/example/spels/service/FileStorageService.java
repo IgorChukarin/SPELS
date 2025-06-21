@@ -5,25 +5,47 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class FileStorageService {
     private static final String CARD_PHOTO_UPLOAD_DIR = "uploads/products";
     private static final String PAGE_PHOTO_UPLOAD_DIR = "uploads/photos";
-    private static final String DOCUMENT_UPLOAD_DIR = "uploads/documents";
+    private static final String PAGE_DOCUMENT_UPLOAD_DIR = "uploads/documents";
 
 
     public String saveCardPhoto(MultipartFile file) {
         return saveFile(file, CARD_PHOTO_UPLOAD_DIR);
     }
 
-    public String savePagePhoto(MultipartFile file) {
-        return saveFile(file, PAGE_PHOTO_UPLOAD_DIR);
+
+    public List<String> savePagePhoto(List<MultipartFile> PagePhotos) {
+        List<String> photoPaths = new ArrayList<>();
+        if (PagePhotos != null && !PagePhotos.isEmpty()) {
+            for (MultipartFile photo : PagePhotos) {
+                if (!photo.isEmpty()) {
+                    String path = saveFile(photo, PAGE_PHOTO_UPLOAD_DIR);
+                    photoPaths.add(path);
+                }
+            }
+        }
+        return photoPaths;
     }
 
-    public String saveDocument(MultipartFile file) {
-        return saveFile(file, DOCUMENT_UPLOAD_DIR);
+    public List<String> saveDocument(List<MultipartFile> PageDocuments) {
+        List<String> documentPaths = new ArrayList<>();
+        if (PageDocuments != null && !PageDocuments.isEmpty()) {
+            for (MultipartFile photo : PageDocuments) {
+                if (!photo.isEmpty()) {
+                    String path = saveFile(photo, PAGE_DOCUMENT_UPLOAD_DIR);
+                    documentPaths.add(path);
+                }
+            }
+        }
+        return documentPaths;
     }
+
 
     private String saveFile(MultipartFile file, String uploadDirectory) {
         if (file.isEmpty()) {
