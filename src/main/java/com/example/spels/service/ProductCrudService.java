@@ -5,12 +5,14 @@ import com.example.spels.model.PageDocument;
 import com.example.spels.model.Product;
 import com.example.spels.repository.ProductRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductCrudService implements CrudService<ProductDto> {
+public class ProductCrudService {
 
     private final ProductRepository productRepository;
     private final FileStorageService fileStorageService;
@@ -20,7 +22,6 @@ public class ProductCrudService implements CrudService<ProductDto> {
         this.fileStorageService = fileStorageService;
     }
 
-    @Override
     public ProductDto getById(Integer id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Продукт с id " + id + " не найден"));
@@ -28,18 +29,28 @@ public class ProductCrudService implements CrudService<ProductDto> {
         return productDto;
     }
 
-    @Override
     public Collection<ProductDto> getAll() {
         return productRepository.findAll().stream().map(ProductCrudService::mapToDto).toList();
     }
 
-    @Override
-    public void create(ProductDto productDto) {
+
+    public void createProduct(ProductDto productDto, MultipartFile imageFile, List<MultipartFile> PagePhotos, List<MultipartFile> PageDocuments) {
+        String imagePath = fileStorageService.saveCardPhoto(imageFile);
+        productDto.setImagePath(imagePath);
+
+        List<String> photoPaths = fileStorageService.savePagePhoto(PagePhotos);
+        productDto.setPhotos(photoPaths);
+
         Product product = mapToEntity(productDto);
+        productRepository.save(product);
+
+        List<PageDocument> pageDocuments = fileStorageService.saveDocument(PageDocuments, product);
+        product.getDocuments().clear();
+        product.getDocuments().addAll(pageDocuments);
+
         productRepository.save(product);
     }
 
-    @Override
     public void update(ProductDto productDto) {
         Product existingProduct = productRepository.findById(productDto.getId())
                 .orElseThrow(() -> new RuntimeException("Продукт не найден"));
@@ -68,7 +79,6 @@ public class ProductCrudService implements CrudService<ProductDto> {
     }
 
 
-    @Override
     public void deleteById(Integer id) {
         Optional<Product> productOpt = productRepository.findById(id);
         if (productOpt.isPresent()) {

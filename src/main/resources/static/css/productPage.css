@@ -1,14 +1,14 @@
 .carousel-inner {
-  width: 500px;   /* фиксированная ширина */
-  height: 300px;  /* фиксированная высота */
-  margin: 0 auto; /* центрируем карусель по горизонтали */
+  width: 500px;
+  height: 300px;
+  margin: 0 auto;
   position: relative;
 }
 
 .carousel-item {
   width: 100%;
   height: 100%;
-  justify-content: center;   /* горизонтальное центрирование */
+  justify-content: center;
 
 }
 

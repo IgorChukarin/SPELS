@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,19 +37,10 @@ public class AdminController {
     public String createProduct(
             @ModelAttribute ProductDto productDto,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
-            @RequestParam(value = "pagePhotos", required = false) List<MultipartFile> PagePhotos,
-            @RequestParam(value = "pageDocuments", required = false) List<MultipartFile> PageDocuments
+            @RequestParam(value = "pagePhotos", required = false) List<MultipartFile> pagePhotos,
+            @RequestParam(value = "pageDocuments", required = false) List<MultipartFile> pageDocuments
     ) {
-        String imagePath = fileStorageService.saveCardPhoto(imageFile);
-        productDto.setImagePath(imagePath);
-
-        List<String> photoPaths = fileStorageService.savePagePhoto(PagePhotos);
-        productDto.setPhotos(photoPaths);
-
-        List<PageDocument> pageDocuments = fileStorageService.saveDocument(PageDocuments);
-        productDto.setDocuments(pageDocuments);
-
-        productCrudService.create(productDto);
+        productCrudService.createProduct(productDto, imageFile, pagePhotos, pageDocuments);
         return "redirect:/admin";
     }
 
@@ -69,8 +59,9 @@ public class AdminController {
         }
         List<String> photoPaths = fileStorageService.savePagePhoto(PagePhotos);
         productDto.setPhotos(photoPaths);
-        List<PageDocument> pageDocuments = fileStorageService.saveDocument(PageDocuments);
-        productDto.setDocuments(pageDocuments);
+
+//        List<PageDocument> pageDocuments = fileStorageService.saveDocument(PageDocuments);
+//        productDto.setDocuments(pageDocuments);
 
         productCrudService.update(productDto);
         return "redirect:/admin";

@@ -1,6 +1,7 @@
 package com.example.spels.service;
 
 import com.example.spels.model.PageDocument;
+import com.example.spels.model.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,7 +35,7 @@ public class FileStorageService {
         return photoPaths;
     }
 
-    public List<PageDocument> saveDocument(List<MultipartFile> PageDocuments) {
+    public List<PageDocument> saveDocument(List<MultipartFile> PageDocuments, Product product) {
         List<PageDocument> pageDocuments = new ArrayList<>();
         if (PageDocuments != null && !PageDocuments.isEmpty()) {
             for (MultipartFile document : PageDocuments) {
@@ -44,6 +45,7 @@ public class FileStorageService {
                     PageDocument pageDocument = new PageDocument();
                     pageDocument.setName(name);
                     pageDocument.setPath(path);
+                    pageDocument.setProduct(product);
                     pageDocuments.add(pageDocument);
                 }
             }
