@@ -97,3 +97,12 @@ org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-21
 org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]
 2025-06-21 18:30:54 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]
+2025-06-21 18:41:34 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]
+2025-06-21 18:42:56 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]
+2025-06-22 09:27:21 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLNonTransientException: The object is already closed [90007-214]
+2025-06-22 10:13:19 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO product_photos (product_id, photo_url) VALUES (1, '/uploads/photos/blueprint1.png'), (1, '/uploads/photos/blueprint2.png'), (1, '/uploads/photos/blueprint3.png')[*])"; SQL statement:
+INSERT INTO product_photos (product_id, photo_url) VALUES (1, '/uploads/photos/blueprint1.png'), (1, '/uploads/photos/blueprint2.png'), (1, '/uploads/photos/blueprint3.png')) [42000-214]

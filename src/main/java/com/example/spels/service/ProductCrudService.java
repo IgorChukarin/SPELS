@@ -57,13 +57,16 @@ public class ProductCrudService implements CrudService<ProductDto> {
             existingProduct.setPhotos(productDto.getPhotos());
         }
 
-        existingProduct.getDocuments().clear();
-        for (PageDocument doc : productDto.getDocuments()) {
-            doc.setProduct(existingProduct);
+        if (!productDto.getDocuments().isEmpty()) {
+            existingProduct.getDocuments().clear();
+            for (PageDocument doc : productDto.getDocuments()) {
+                doc.setProduct(existingProduct);
+            }
+            existingProduct.getDocuments().addAll(productDto.getDocuments());
         }
-        existingProduct.getDocuments().addAll(productDto.getDocuments());
         productRepository.save(existingProduct);
     }
+
 
     @Override
     public void deleteById(Integer id) {
@@ -75,6 +78,7 @@ public class ProductCrudService implements CrudService<ProductDto> {
         }
         productRepository.deleteById(id);
     }
+
 
     public static ProductDto mapToDto(Product product) {
         ProductDto productDto = new ProductDto();

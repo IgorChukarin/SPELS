@@ -12,10 +12,4 @@ public class Application {
 
 
 // TODO:
-
-// длинна текстов решить проблему
-
 // удалять документы при обновлении
-
-
-// В корне должны быть uploads/documents, uploads/photos, uploads/products
