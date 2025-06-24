@@ -9,7 +9,3 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 }
-
-// TODO:
-// удалять документы при обновлении
-// страницу, когда страница не найдена или произошла ошибка

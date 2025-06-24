@@ -50,18 +50,21 @@ public class ProductCrudService {
         updateBasicFields(product, productDto);
 
         if (imageFile != null && !imageFile.isEmpty()) {
+            fileStorageService.deleteCardPhoto(product.getImagePath());
             String imagePath = fileStorageService.saveCardPhoto(imageFile);
             productDto.setImagePath(imagePath);
             updateImage(product, productDto);
         }
 
         if (pagePhotos != null && !pagePhotos.isEmpty()) {
+            fileStorageService.deletePagePhotos(product.getPhotos());
             List<String> photoPaths = fileStorageService.savePagePhotos(pagePhotos);
             productDto.setPhotos(photoPaths);
             updatePhotos(product, productDto);
         }
 
         if (pageDocuments != null && !pageDocuments.isEmpty()) {
+            fileStorageService.deletePageDocuments(product.getDocuments());
             List<PageDocument> documents = fileStorageService.savePageDocuments(pageDocuments);
             productDto.setDocuments(documents);
             updateDocuments(product, productDto);
