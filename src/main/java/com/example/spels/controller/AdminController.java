@@ -16,11 +16,9 @@ import java.util.List;
 public class AdminController {
 
     private final ProductCrudService productCrudService;
-    private final FileStorageService fileStorageService;
 
-    public AdminController(ProductCrudService productCrudService, FileStorageService fileStorageService) {
+    public AdminController(ProductCrudService productCrudService) {
         this.productCrudService = productCrudService;
-        this.fileStorageService = fileStorageService;
     }
 
 
@@ -30,6 +28,7 @@ public class AdminController {
         model.addAttribute("products", products);
         return "admin";
     }
+
 
     @GetMapping("/products/{id}")
     public String getAdminProductPage(@PathVariable Integer id, Model model) {

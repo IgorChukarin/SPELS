@@ -22,7 +22,14 @@ public class FileStorageService {
     }
 
 
-    public List<String> savePagePhoto(List<MultipartFile> PagePhotos) {
+    public void deleteCardPhoto(String cardPhotoPath) {
+        if (cardPhotoPath != null) {
+            deleteFile(cardPhotoPath);
+        }
+    }
+
+
+    public List<String> savePagePhotos(List<MultipartFile> PagePhotos) {
         List<String> photoPaths = new ArrayList<>();
         if (PagePhotos != null && !PagePhotos.isEmpty()) {
             for (MultipartFile photo : PagePhotos) {
@@ -35,7 +42,17 @@ public class FileStorageService {
         return photoPaths;
     }
 
-    public List<PageDocument> saveDocument(List<MultipartFile> PageDocuments, Product product) {
+
+    public void deletePagePhotos(List<String> pagePhotoPaths) {
+        if (pagePhotoPaths != null && !pagePhotoPaths.isEmpty()) {
+            for (String photoPath : pagePhotoPaths) {
+                deleteFile(photoPath);
+            }
+        }
+    }
+
+
+    public List<PageDocument> savePageDocuments(List<MultipartFile> PageDocuments, Product product) {
         List<PageDocument> pageDocuments = new ArrayList<>();
         if (PageDocuments != null && !PageDocuments.isEmpty()) {
             for (MultipartFile document : PageDocuments) {
@@ -51,6 +68,15 @@ public class FileStorageService {
             }
         }
         return pageDocuments;
+    }
+
+
+    public void deletePageDocuments(List<PageDocument> pageDocuments) {
+        if (pageDocuments != null && !pageDocuments.isEmpty()) {
+            for (PageDocument pageDocument: pageDocuments) {
+                deleteFile(pageDocument.getPath());
+            }
+        }
     }
 
 
@@ -88,11 +114,12 @@ public class FileStorageService {
     }
 
 
-    public void deleteImage(String imagePath) {
-        if (imagePath != null && !imagePath.isBlank()) {
-            Path filePath = Paths.get(imagePath);
+    private void deleteFile(String filePath) {
+        if (filePath != null && !filePath.isBlank()) {
+            String relativePath = filePath.substring(1);
+            Path path = Paths.get(relativePath);
             try {
-                Files.deleteIfExists(filePath);
+                Files.deleteIfExists(path);
             } catch (IOException e) {
                 e.printStackTrace();
             }

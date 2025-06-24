@@ -4,12 +4,12 @@ import com.example.spels.dto.ProductDto;
 import com.example.spels.model.PageDocument;
 import com.example.spels.model.Product;
 import com.example.spels.repository.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductCrudService {
@@ -27,13 +27,13 @@ public class ProductCrudService {
         String imagePath = fileStorageService.saveCardPhoto(imageFile);
         productDto.setImagePath(imagePath);
 
-        List<String> photoPaths = fileStorageService.savePagePhoto(PagePhotos);
+        List<String> photoPaths = fileStorageService.savePagePhotos(PagePhotos);
         productDto.setPhotos(photoPaths);
 
         Product product = mapToEntity(productDto);
         productRepository.save(product);
 
-        List<PageDocument> pageDocuments = fileStorageService.saveDocument(PageDocuments, product);
+        List<PageDocument> pageDocuments = fileStorageService.savePageDocuments(PageDocuments, product);
         product.getDocuments().addAll(pageDocuments);
 
         productRepository.save(product);
@@ -52,7 +52,7 @@ public class ProductCrudService {
         }
 
         if (pagePhotos != null && !imageFile.isEmpty()) {
-            List<String> photoPaths = fileStorageService.savePagePhoto(pagePhotos);
+            List<String> photoPaths = fileStorageService.savePagePhotos(pagePhotos);
             productDto.setPhotos(photoPaths);
             updatePhotos(existingProduct, productDto);
         }
@@ -60,7 +60,7 @@ public class ProductCrudService {
         productRepository.save(existingProduct);
 
         if (pageDocuments != null && !pageDocuments.isEmpty()) {
-            List<PageDocument> documents = fileStorageService.saveDocument(pageDocuments, existingProduct);
+            List<PageDocument> documents = fileStorageService.savePageDocuments(pageDocuments, existingProduct);
             productDto.setDocuments(documents);
             updateDocuments(existingProduct, productDto);
         }
@@ -103,13 +103,13 @@ public class ProductCrudService {
 
 
     public void deleteById(Integer id) {
-        Optional<Product> productOpt = productRepository.findById(id);
-        if (productOpt.isPresent()) {
-            Product product = productOpt.get();
-            String imagePath = product.getImagePath();
-            fileStorageService.deleteImage(imagePath);
-        }
-        productRepository.deleteById(id);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
+
+        fileStorageService.deleteCardPhoto(product.getImagePath());
+        fileStorageService.deletePagePhotos(product.getPhotos());
+        fileStorageService.deletePageDocuments(product.getDocuments());
+        productRepository.delete(product);
     }
 
 
