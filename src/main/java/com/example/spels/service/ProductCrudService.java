@@ -6,6 +6,7 @@ import com.example.spels.model.Product;
 import com.example.spels.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
@@ -23,49 +24,50 @@ public class ProductCrudService {
     }
 
 
-    public void createProduct(ProductDto productDto, MultipartFile imageFile, List<MultipartFile> PagePhotos, List<MultipartFile> PageDocuments) {
+    @Transactional
+    public void createProduct(ProductDto productDto, MultipartFile imageFile, List<MultipartFile> pagePhotos, List<MultipartFile> pageDocuments) {
         String imagePath = fileStorageService.saveCardPhoto(imageFile);
-        productDto.setImagePath(imagePath);
+        List<String> photoPaths = fileStorageService.savePagePhotos(pagePhotos);
+        List<PageDocument> documents = fileStorageService.savePageDocuments(pageDocuments);
 
-        List<String> photoPaths = fileStorageService.savePagePhotos(PagePhotos);
+        productDto.setImagePath(imagePath);
         productDto.setPhotos(photoPaths);
+        productDto.getDocuments().addAll(documents);
 
         Product product = mapToEntity(productDto);
-        productRepository.save(product);
 
-        List<PageDocument> pageDocuments = fileStorageService.savePageDocuments(PageDocuments, product);
-        product.getDocuments().addAll(pageDocuments);
+        product.getDocuments().forEach(doc -> doc.setProduct(product));
 
         productRepository.save(product);
     }
 
+
+    @Transactional
     public void updateProduct(ProductDto productDto, MultipartFile imageFile, List<MultipartFile> pagePhotos, List<MultipartFile> pageDocuments) {
-        Product existingProduct = productRepository.findById(productDto.getId())
+        Product product = productRepository.findById(productDto.getId())
                 .orElseThrow(() -> new RuntimeException("Продукт не найден"));
 
-        updateBasicFields(existingProduct, productDto);
+        updateBasicFields(product, productDto);
 
         if (imageFile != null && !imageFile.isEmpty()) {
             String imagePath = fileStorageService.saveCardPhoto(imageFile);
             productDto.setImagePath(imagePath);
-            updateImage(existingProduct, productDto);
+            updateImage(product, productDto);
         }
 
-        if (pagePhotos != null && !imageFile.isEmpty()) {
+        if (pagePhotos != null && !pagePhotos.isEmpty()) {
             List<String> photoPaths = fileStorageService.savePagePhotos(pagePhotos);
             productDto.setPhotos(photoPaths);
-            updatePhotos(existingProduct, productDto);
+            updatePhotos(product, productDto);
         }
-
-        productRepository.save(existingProduct);
 
         if (pageDocuments != null && !pageDocuments.isEmpty()) {
-            List<PageDocument> documents = fileStorageService.savePageDocuments(pageDocuments, existingProduct);
+            List<PageDocument> documents = fileStorageService.savePageDocuments(pageDocuments);
             productDto.setDocuments(documents);
-            updateDocuments(existingProduct, productDto);
+            updateDocuments(product, productDto);
         }
 
-        productRepository.save(existingProduct);
+        productRepository.save(product);
     }
 
 
@@ -79,7 +81,7 @@ public class ProductCrudService {
 
     private void updateImage(Product product, ProductDto dto) {
         if (dto.getImagePath() != null) {
-            product.setImagePath(product.getImagePath());
+            product.setImagePath(dto.getImagePath());
         }
     }
 
@@ -102,6 +104,7 @@ public class ProductCrudService {
     }
 
 
+    @Transactional
     public void deleteById(Integer id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
@@ -116,8 +119,7 @@ public class ProductCrudService {
     public ProductDto getById(Integer id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Продукт с id " + id + " не найден"));
-        ProductDto productDto = mapToDto(product);
-        return productDto;
+        return mapToDto(product);
     }
 
 
@@ -143,7 +145,7 @@ public class ProductCrudService {
 
     public static Product mapToEntity(ProductDto productDto) {
         Product product = new Product();
-        product.setId(productDto.getId());
+
         product.setImagePath(productDto.getImagePath());
         product.setBoldText(productDto.getBoldText());
         product.setText(productDto.getText());

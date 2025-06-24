@@ -52,7 +52,7 @@ public class FileStorageService {
     }
 
 
-    public List<PageDocument> savePageDocuments(List<MultipartFile> PageDocuments, Product product) {
+    public List<PageDocument> savePageDocuments(List<MultipartFile> PageDocuments) {
         List<PageDocument> pageDocuments = new ArrayList<>();
         if (PageDocuments != null && !PageDocuments.isEmpty()) {
             for (MultipartFile document : PageDocuments) {
@@ -62,7 +62,6 @@ public class FileStorageService {
                     PageDocument pageDocument = new PageDocument();
                     pageDocument.setName(name);
                     pageDocument.setPath(path);
-                    pageDocument.setProduct(product);
                     pageDocuments.add(pageDocument);
                 }
             }
