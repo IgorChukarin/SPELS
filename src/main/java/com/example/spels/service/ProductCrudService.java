@@ -22,17 +22,6 @@ public class ProductCrudService {
         this.fileStorageService = fileStorageService;
     }
 
-    public ProductDto getById(Integer id) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Продукт с id " + id + " не найден"));
-        ProductDto productDto = mapToDto(product);
-        return productDto;
-    }
-
-    public Collection<ProductDto> getAll() {
-        return productRepository.findAll().stream().map(ProductCrudService::mapToDto).toList();
-    }
-
 
     public void createProduct(ProductDto productDto, MultipartFile imageFile, List<MultipartFile> PagePhotos, List<MultipartFile> PageDocuments) {
         String imagePath = fileStorageService.saveCardPhoto(imageFile);
@@ -45,37 +34,71 @@ public class ProductCrudService {
         productRepository.save(product);
 
         List<PageDocument> pageDocuments = fileStorageService.saveDocument(PageDocuments, product);
-        product.getDocuments().clear();
         product.getDocuments().addAll(pageDocuments);
 
         productRepository.save(product);
     }
 
-    public void update(ProductDto productDto) {
+    public void updateProduct(ProductDto productDto, MultipartFile imageFile, List<MultipartFile> pagePhotos, List<MultipartFile> pageDocuments) {
         Product existingProduct = productRepository.findById(productDto.getId())
                 .orElseThrow(() -> new RuntimeException("Продукт не найден"));
 
-        existingProduct.setBoldText(productDto.getBoldText());
-        existingProduct.setText(productDto.getText());
-        existingProduct.setCompanyName(productDto.getCompanyName());
-        existingProduct.setPageText(productDto.getPageText());
+        updateBasicFields(existingProduct, productDto);
 
-        if (productDto.getImagePath() != null) {
-            existingProduct.setImagePath(productDto.getImagePath());
+        if (imageFile != null && !imageFile.isEmpty()) {
+            String imagePath = fileStorageService.saveCardPhoto(imageFile);
+            productDto.setImagePath(imagePath);
+            updateImage(existingProduct, productDto);
         }
 
-        if (!productDto.getPhotos().isEmpty()) {
-            existingProduct.setPhotos(productDto.getPhotos());
+        if (pagePhotos != null && !imageFile.isEmpty()) {
+            List<String> photoPaths = fileStorageService.savePagePhoto(pagePhotos);
+            productDto.setPhotos(photoPaths);
+            updatePhotos(existingProduct, productDto);
         }
 
-        if (!productDto.getDocuments().isEmpty()) {
-            existingProduct.getDocuments().clear();
-            for (PageDocument doc : productDto.getDocuments()) {
-                doc.setProduct(existingProduct);
-            }
-            existingProduct.getDocuments().addAll(productDto.getDocuments());
-        }
         productRepository.save(existingProduct);
+
+        if (pageDocuments != null && !pageDocuments.isEmpty()) {
+            List<PageDocument> documents = fileStorageService.saveDocument(pageDocuments, existingProduct);
+            productDto.setDocuments(documents);
+            updateDocuments(existingProduct, productDto);
+        }
+
+        productRepository.save(existingProduct);
+    }
+
+
+    private void updateBasicFields(Product product, ProductDto dto) {
+        product.setBoldText(dto.getBoldText());
+        product.setText(dto.getText());
+        product.setCompanyName(dto.getCompanyName());
+        product.setPageText(dto.getPageText());
+    }
+
+
+    private void updateImage(Product product, ProductDto dto) {
+        if (dto.getImagePath() != null) {
+            product.setImagePath(product.getImagePath());
+        }
+    }
+
+
+    private void updatePhotos(Product product, ProductDto dto) {
+        if (dto.getPhotos() != null && !dto.getPhotos().isEmpty()) {
+            product.setPhotos(dto.getPhotos());
+        }
+    }
+
+
+    private void updateDocuments(Product product, ProductDto dto) {
+        if (dto.getDocuments() != null && !dto.getDocuments().isEmpty()) {
+            product.getDocuments().clear();
+            for (PageDocument doc : dto.getDocuments()) {
+                doc.setProduct(product);
+            }
+            product.getDocuments().addAll(dto.getDocuments());
+        }
     }
 
 
@@ -87,6 +110,19 @@ public class ProductCrudService {
             fileStorageService.deleteImage(imagePath);
         }
         productRepository.deleteById(id);
+    }
+
+
+    public ProductDto getById(Integer id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Продукт с id " + id + " не найден"));
+        ProductDto productDto = mapToDto(product);
+        return productDto;
+    }
+
+
+    public Collection<ProductDto> getAll() {
+        return productRepository.findAll().stream().map(ProductCrudService::mapToDto).toList();
     }
 
 
@@ -103,6 +139,7 @@ public class ProductCrudService {
         productDto.setDocuments(product.getDocuments());
         return productDto;
     }
+
 
     public static Product mapToEntity(ProductDto productDto) {
         Product product = new Product();

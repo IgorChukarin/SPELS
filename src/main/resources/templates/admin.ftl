@@ -6,11 +6,13 @@
         <#list products as product>
           <div class="col">
             <div class="card">
-              <img src="${product.imagePath}" loading="lazy" class="card-img-top" alt="Изображение">
-              <div class="card-body">
-                <h5 class="card-title">${product.boldText}</h5>
-                <p class="card-text">${product.text}</p>
-              </div>
+              <a href="admin/products/${product.id}" class="text-decoration-none text-dark">
+                <img src="${product.imagePath}" loading="lazy" class="card-img-top" alt="Изображение">
+                <div class="card-body">
+                  <h5 class="card-title">${product.boldText}</h5>
+                  <p class="card-text">${product.text}</p>
+                </div>
+              </a>
               <div class="card-footer p-0">
                 <div class="row g-0">
                   <div class="col-6 border-end">

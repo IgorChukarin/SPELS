@@ -1,7 +1,6 @@
 package com.example.spels.controller;
 
 import com.example.spels.dto.ProductDto;
-import com.example.spels.model.PageDocument;
 import com.example.spels.service.FileStorageService;
 import com.example.spels.service.ProductCrudService;
 import org.springframework.stereotype.Controller;
@@ -32,6 +31,13 @@ public class AdminController {
         return "admin";
     }
 
+    @GetMapping("/products/{id}")
+    public String getAdminProductPage(@PathVariable Integer id, Model model) {
+        ProductDto product = productCrudService.getById(id);
+        model.addAttribute("product", product);
+        return "adminProductPage";
+    }
+
 
     @PostMapping("/add")
     public String createProduct(
@@ -49,21 +55,10 @@ public class AdminController {
     public String editProduct(
             @ModelAttribute ProductDto productDto,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
-            @RequestParam(value = "pagePhotos", required = false) List<MultipartFile> PagePhotos,
-            @RequestParam(value = "pageDocuments", required = false) List<MultipartFile> PageDocuments
+            @RequestParam(value = "pagePhotos", required = false) List<MultipartFile> pagePhotos,
+            @RequestParam(value = "pageDocuments", required = false) List<MultipartFile> pageDocuments
             ) {
-
-        if (!imageFile.isEmpty()) {
-            String imagePath = fileStorageService.saveCardPhoto(imageFile);
-            productDto.setImagePath(imagePath);
-        }
-        List<String> photoPaths = fileStorageService.savePagePhoto(PagePhotos);
-        productDto.setPhotos(photoPaths);
-
-//        List<PageDocument> pageDocuments = fileStorageService.saveDocument(PageDocuments);
-//        productDto.setDocuments(pageDocuments);
-
-        productCrudService.update(productDto);
+        productCrudService.updateProduct(productDto, imageFile, pagePhotos, pageDocuments);
         return "redirect:/admin";
     }
 
