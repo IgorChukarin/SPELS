@@ -100,7 +100,7 @@ public class FileStorageService {
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
 //            return "/" + uploadDirectory + "/" + fileName;
-            return uploadDirectory + "/" + fileName;
+            return "/app/" + uploadDirectory + "/" + fileName;
         } catch (IOException e) {
             throw new RuntimeException("Ошибка при сохранении изображения", e);
         }
