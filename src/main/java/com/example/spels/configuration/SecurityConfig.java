@@ -53,7 +53,7 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .csrf(csrf -> csrf
-                    .ignoringRequestMatchers("/h2-console/**")
+                    .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))
                 )
                 .headers(headers -> headers
                         .frameOptions(frame -> frame.disable())

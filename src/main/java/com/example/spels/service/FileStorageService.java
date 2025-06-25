@@ -99,7 +99,8 @@ public class FileStorageService {
             Path filePath = uploadPath.resolve(fileName);
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-            return "/" + uploadDirectory + "/" + fileName;
+//            return "/" + uploadDirectory + "/" + fileName;
+            return uploadDirectory + "/" + fileName;
         } catch (IOException e) {
             throw new RuntimeException("Ошибка при сохранении изображения", e);
         }
@@ -115,7 +116,7 @@ public class FileStorageService {
 
     private void deleteFile(String filePath) {
         if (filePath != null && !filePath.isBlank()) {
-            String relativePath = filePath.substring(1);
+            String relativePath = filePath.substring(0); // here
             Path path = Paths.get(relativePath);
             try {
                 Files.deleteIfExists(path);
