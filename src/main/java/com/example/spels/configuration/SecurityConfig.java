@@ -53,10 +53,10 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .csrf(csrf -> csrf
-                    .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**")) // отключаем CSRF для H2
+                    .ignoringRequestMatchers("/h2-console/**")
                 )
                 .headers(headers -> headers
-                        .frameOptions(frame -> frame.disable()) // современный способ отключить X-Frame-Options
+                        .frameOptions(frame -> frame.disable())
                 );
 
         return http.build();
