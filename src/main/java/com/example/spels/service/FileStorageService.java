@@ -95,6 +95,8 @@ public class FileStorageService {
             String fileExtension = getFileExtension(originalFilename);
             String fileName = System.currentTimeMillis() + fileExtension;
 
+            Thread.sleep(10);
+
             Path filePath = uploadPath.resolve(fileName);
 
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
@@ -102,6 +104,8 @@ public class FileStorageService {
             return uploadDirectory + "/" + fileName;
         } catch (IOException e) {
             throw new RuntimeException("Ошибка при сохранении изображения", e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
