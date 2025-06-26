@@ -12,9 +12,9 @@ import java.util.List;
 
 @Service
 public class FileStorageService {
-    private static final String CARD_PHOTO_UPLOAD_DIR = "uploads/products";
-    private static final String PAGE_PHOTO_UPLOAD_DIR = "uploads/photos";
-    private static final String PAGE_DOCUMENT_UPLOAD_DIR = "uploads/documents";
+    private static final String CARD_PHOTO_UPLOAD_DIR = "products";
+    private static final String PAGE_PHOTO_UPLOAD_DIR = "photos";
+    private static final String PAGE_DOCUMENT_UPLOAD_DIR = "documents";
 
 
     public String saveCardPhoto(MultipartFile file) {
@@ -85,22 +85,21 @@ public class FileStorageService {
         }
 
         try {
-            Path uploadPath = Paths.get(uploadDirectory);
+            Path uploadPath = Paths.get("uploads", uploadDirectory).toAbsolutePath();
+
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
 
-            // Уникальное имя файла (например, по времени)
             String originalFilename = file.getOriginalFilename();
             String fileExtension = getFileExtension(originalFilename);
             String fileName = System.currentTimeMillis() + fileExtension;
 
-            // Путь к файлу
             Path filePath = uploadPath.resolve(fileName);
+
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-//            return "/" + uploadDirectory + "/" + fileName;
-            return "/app/" + uploadDirectory + "/" + fileName;
+            return uploadDirectory + "/" + fileName;
         } catch (IOException e) {
             throw new RuntimeException("Ошибка при сохранении изображения", e);
         }
@@ -116,9 +115,8 @@ public class FileStorageService {
 
     private void deleteFile(String filePath) {
         if (filePath != null && !filePath.isBlank()) {
-            String relativePath = filePath.substring(0); // here
-            Path path = Paths.get(relativePath);
             try {
+                Path path = Paths.get("uploads", filePath).toAbsolutePath();
                 Files.deleteIfExists(path);
             } catch (IOException e) {
                 e.printStackTrace();

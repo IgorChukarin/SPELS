@@ -12,7 +12,7 @@
             <div class="carousel-inner">
               <#list product.photos as photo>
                 <div class="carousel-item <#if photo?index == 0>active</#if>">
-                  <img class="d-block w-100" src="${photo}" alt="Slide ${photo?index + 1}">
+                  <img class="d-block w-100" src="/uploads/${photo}" alt="Slide ${photo?index + 1}">
                 </div>
               </#list>
             </div>
@@ -38,7 +38,7 @@
           <h3 class="mt-5 mb-4">Документация</h3>
           <div class="d-flex flex-column gap-2">
             <#list product.documents as doc>
-              <a href="${doc.path}" download="${doc.path}" class="d-flex align-items-center text-decoration-none">
+              <a href="/uploads/${doc.path}" download="${doc.path}" class="d-flex align-items-center text-decoration-none">
                 <img src="/images/fileicon.PNG" alt="file" width="50" class="me-2">
                 <span>${doc.name}</span>
               </a>

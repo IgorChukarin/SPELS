@@ -7,7 +7,7 @@
             <div class="col">
                 <a href="products/${product.id}" class="text-decoration-none text-dark">
                     <div class="card">
-                        <img src="${product.imagePath}" loading="lazy" class="card-img-top" alt="Изображение">
+                        <img src="/uploads/${product.imagePath}" loading="lazy" class="card-img-top" alt="Изображение">
                         <div class="card-body">
                             <h5 class="card-title">${product.boldText}</h5>
                             <p class="card-text">${product.text}</p>
