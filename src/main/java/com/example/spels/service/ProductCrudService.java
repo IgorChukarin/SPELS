@@ -45,7 +45,7 @@ public class ProductCrudService {
     @Transactional
     public void updateProduct(ProductDto productDto, MultipartFile imageFile, List<MultipartFile> pagePhotos, List<MultipartFile> pageDocuments) {
         Product product = productRepository.findById(productDto.getId())
-                .orElseThrow(() -> new RuntimeException("Продукт не найден"));
+                .orElseThrow(() -> new RuntimeException("Не удалось обновить продукт, продукт не найден"));
 
         updateBasicFields(product, productDto);
 
@@ -56,14 +56,20 @@ public class ProductCrudService {
             updateImage(product, productDto);
         }
 
-        if (pagePhotos != null && !pagePhotos.isEmpty()) {
+        if (
+                (pagePhotos != null && !pagePhotos.isEmpty()) &&
+                !(pagePhotos.size() == 1 && pagePhotos.get(0).isEmpty())
+        ) {
             fileStorageService.deletePagePhotos(product.getPhotos());
             List<String> photoPaths = fileStorageService.savePagePhotos(pagePhotos);
             productDto.setPhotos(photoPaths);
             updatePhotos(product, productDto);
         }
 
-        if (pageDocuments != null && !pageDocuments.isEmpty()) {
+        if (
+                (pageDocuments != null && !pageDocuments.isEmpty()) &&
+                !(pageDocuments.size() == 1 && pageDocuments.get(0).isEmpty())
+        ) {
             fileStorageService.deletePageDocuments(product.getDocuments());
             List<PageDocument> documents = fileStorageService.savePageDocuments(pageDocuments);
             productDto.setDocuments(documents);
