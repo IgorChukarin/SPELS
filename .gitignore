@@ -39,6 +39,6 @@ build/
 
 src/main/resources/data.sql
 
-app/
-
 uploads/
+
+data/
